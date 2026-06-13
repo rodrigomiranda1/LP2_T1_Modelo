@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Ejemplos Prof. Ernesto Arbulú</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+	<div class="container mt-4">
+		<div class="card shadow-lg">
+			<div class="card-body">
+				<h1 class="text-center">Inventario - Nuevo</h1>
+				<div class="row d-flex justify-content-center">
+					<div class="col-md-6">
+						<form th:action="@{/inventario/registrar}" th:object="${inventario}" class="row g-2"  method="post" novalidate>
+							<div class="col-md-6 position-relative">
+								<label for="fechaVencimiento" class="form-label">Fecha de vencimiento</label>
+								<input type="date" class="form-control"  th:field="*{fechaVencimiento}"
+									required>
+							</div>
+							<div class="col-md-6 position-relative">
+								<label for="producto" class="form-label">Producto</label>
+								<div class="input-group">
+									<span class="input-group-text">
+										<i class="fa-solid fa-box"></i>
+									</span>
+									<select class="form-select" required  th:field="*{producto}">
+										<option value="">--Seleccione--</option>
+										<option th:each="item: ${productos}"
+										th:value="${item.idProducto}"
+										th:text="${item.nombre}"></option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-6 position-relative">
+								<label for="costoIngreso" class="form-label">Costo de ingreso</label>
+								<div class="input-group">
+									<span class="input-group-text">S/.</span>
+									<input type="number" class="form-control" step="0.01" placeholder="0.00"
+										 th:field="*{costoIngreso}" required>
+								</div>
+							</div>
+							<div class="col-md-6 position-relative">
+								<label for="cantidad" class="form-label">Cantidad</label>
+								<div class="input-group">
+									<span class="input-group-text">
+										<i class="fa-brands fa-stack-overflow"></i>
+									</span>
+									<input type="number" class="form-control" placeholder="0"  th:field="*{cantidad}" required>
+								</div>
+							</div>
+							<div class="col-md-6 position-relative">
+								<label for="lote" class="form-label">Lote</label>
+								<div class="input-group">
+									<span class="input-group-text">
+										<i class="fa-solid fa-barcode"></i>
+									</span>
+									<input type="text" class="form-control" placeholder="Ingrese un lote"  th:field="*{lote}" required>
+								</div>
+							</div>
+							<div class="col-md-6 position-relative">
+								<label for="codEstado" class="form-label">Estado</label>
+								<select class="form-select"  th:field="*{codEstado}">
+									<option value="">--Seleccione--</option>
+									<option value="A">Activo</option>
+									<option value="V">Vencido</option>
+									<option value="T">En tránsito</option>
+									<option value="B">Bloqueado</option>
+								</select>
+							</div>
+							<div class="col-md-12 d-flex justify-content-between">
+								<!-- Botón Regresar -->
+								<a href="#" class="btn btn-outline-dark">
+									<i class="fa-solid fa-reply"></i> Regresar
+								</a>
+								<!-- Botón Registrar -->
+								<button type="submit" class="btn btn-primary">
+									<i class="fa-solid fa-floppy-disk"></i> Registrar
+								</button>
+								<!-- Botón Limpiar -->
+								<button type="reset" class="btn btn-secondary">
+									<i class="fa-solid fa-broom"></i> Limpiar
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<th:block th:utext="${alert}"></th:block>
+</body>
+
+</html>

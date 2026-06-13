@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Ejemplos Prof. Ernesto Arbulú</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+	<div class="container mt-5">
+		<div class="card shadow-lg">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-10">
+						<h1 class="card-title">Listado de productos</h1>
+					</div>
+					<div class="col-md-2">
+						<a th:href="@{/inventario/nuevoMiranda}" class="btn btn-success w-100"> <i class="fa-solid fa-plus"></i>
+							Nuevo
+						</a>
+					</div>
+				</div>
+
+				<table class="table table-hover table-responsive">
+					<thead class="table-dark text-center">
+						<tr>
+							<th>Número</th>
+							<th>Fecha de vencimiento</th>
+							<th>Categoría</th>
+							<th>Producto</th>
+							<th>Stock restante</th>
+							<th>Costo de ingreso</th>
+							<th>Cantidad</th>
+							<th>Lote</th>
+							<th>Estado</th>
+							<th>Acciones</th>
+						</tr>
+					</thead>
+					<tbody class="table-secondary">
+						<tr th:each="item: ${lstInventario}">
+							<td th:text="${item.numeroInventario}" class="text-center"></td>
+							<td th:text="${item.fechaVencimiento}"class="text-center"></td>
+							<td th:text="${item.producto.categoria.descripcion}" class="text-center"></td>
+							<td th:text="${item.producto.nombre}" class="text-center"></td>
+							<td th:text="${item.producto.resultadoStock}" class="text-center"></td>
+							<td th:text="|S/.${#numbers.formatDecimal(item.costoIngreso, 1, 'COMMA', 2, 'POINT')}|"class="text-end"></td>							
+							<td th:text="${item.cantidad}" class="text-center"></td>
+							<td th:text="${item.lote}" class="text-center"></td>
+							<td th:text="${item.estadoNombre}" class="text-center"></td>
+							<td class="text-center align-middle">
+								<a th:href="@{/inventario/edicionMiranda/{id}(id=${item.numeroInventario})}" class="btn btn-outline-primary" title="Editar" aria-label="Editar" role="button">
+									<i class="fa-regular fa-pen-to-square"></i>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<th:block th:utext="${toast}"></th:block>
+</body>
+
+</html>
